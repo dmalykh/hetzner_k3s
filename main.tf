@@ -16,7 +16,7 @@ data "hcloud_image" "os" {
 }
 
 data "template_file" "init" {
-  template = "${var.cloud-init}"
+  template = file("${var.cloud-init}")
 }
 
 resource "hcloud_ssh_key" "default" {

@@ -24,9 +24,9 @@ module "k3s" {
       ip = hcloud_server_network.master[i].ip
       connection = {
           type     = "ssh"
-          user = "super"
+          user = "root"
           host = hcloud_server.master[i].ipv4_address
-          private_key = "${file("super.pk")}"
+          private_key = "${var.ssh_key.private_key}"
       }
       flags       = ["--disable-cloud-controller"]
       annotations = { "server_id" : i } // theses annotations will not be managed by this module
@@ -40,9 +40,9 @@ module "k3s" {
       ip   = hcloud_server_network.agent[i].ip
       connection = {
           type     = "ssh"
-          user = "super"
+          user = "root"
           host = hcloud_server.agent[i].ipv4_address
-          private_key = "${file("super.pk")}"
+          private_key = "${var.ssh_key.private_key}"
       }
     }
   }

@@ -4,7 +4,7 @@ variable "hcloud_token" {
 
 variable "cloud-init" {
   type = string
-  default = file("cloud-init.yml")
+  default = "cloud-init.yml"
 }
 
 variable "os" {
@@ -31,7 +31,6 @@ variable "ipadd" {
   default = 1
   description = "Add to IP addresses sequesce to avoid zero-ip defenition"
 }
-
 
 variable "networking" {
   type = object({
@@ -68,4 +67,17 @@ variable "agent" {
     name = optional(string, "agent")
     server_type = string
   })
+}
+
+# K3S vars https://github.com/xunleii/terraform-module-k3s/blob/master/variables.tf
+variable "cidr" {
+  description = "K3s network CIDRs (see https://rancher.com/docs/k3s/latest/en/installation/install-options/)."
+  type = object({
+    pods     = string
+    services = string
+  })
+  default = {
+    pods     = "10.42.0.0/16"
+    services = "10.43.0.0/16"
+  }
 }
