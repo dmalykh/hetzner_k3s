@@ -4,7 +4,7 @@ variable "hcloud_token" {
 
 variable "cloud-init" {
   type = string
-  default = "cloud-init.yml"
+  default = ""
 }
 
 variable "os" {
@@ -40,6 +40,7 @@ variable "networking" {
     network_zone = optional(string, "eu-central")
     sub_ip_range = optional(string, "10.254.1.0/24")
   })
+  default = {}
 }
 
 variable "loadbalancer" {

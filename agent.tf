@@ -5,7 +5,7 @@ resource "hcloud_server" "agent" {
     location = var.location
     server_type = var.agent.server_type
     image = data.hcloud_image.os.name
-    user_data = data.template_file.base.rendered
+    user_data = data.template_file.init.rendered
     backups = false
     ssh_keys = [hcloud_ssh_key.default.id]
 

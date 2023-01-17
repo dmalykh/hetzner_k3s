@@ -16,7 +16,7 @@ data "hcloud_image" "os" {
 }
 
 data "template_file" "init" {
-  template = file("${var.cloud-init}")
+  template = file(var.cloud-init != "" ? var.cloud-init :"${path.module}/cloud-init.yml")
 }
 
 resource "hcloud_ssh_key" "default" {
