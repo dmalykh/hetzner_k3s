@@ -43,15 +43,6 @@ variable "networking" {
   default = {}
 }
 
-variable "loadbalancer" {
-  description = "Load balancer settings"
-  type = object({
-    count = optional(number, 0)
-    name = optional(string, "loadbalancer")
-    server_type = string
-  })
-}
-
 variable "master" {
   description = "Control plane nodes"
   type = object({

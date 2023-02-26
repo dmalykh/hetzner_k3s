@@ -1,6 +1,6 @@
 # K3s 
 module "k3s" {
-  source = "git@github.com:xunleii/terraform-module-k3s.git"
+  source = "git@github.com:dmalykh/terraform-module-k3s.git"
 
   depends_on_    = hcloud_server_network.agent
   k3s_version    = "latest"
@@ -13,7 +13,7 @@ module "k3s" {
   managed_fields = ["label", "taint"] // ignore annotations
 
   global_flags = [
-    "--flannel-iface ens10",
+    "--flannel-iface ens10"
   ]
 
   use_sudo = true
@@ -28,7 +28,9 @@ module "k3s" {
           host = hcloud_server.master[i].ipv4_address
           private_key = "${var.ssh_key.private_key}"
       }
-      flags       = ["--disable-cloud-controller"]
+      flags = concat([],
+       concat([for instance in hcloud_server.master : "--tls-san ${instance.ipv4_address}"], [for instance in hcloud_server.agent : "--tls-san ${instance.ipv4_address}"]))
+      labels = { "node.kubernetes.io/type" = "master" }
       annotations = { "server_id" : i } // theses annotations will not be managed by this module
     }
   }
@@ -85,8 +87,10 @@ resource "kubernetes_cluster_role_binding" "boostrap" {
 }
 
 data "kubernetes_secret" "sa_credentials" {
+  depends_on = [module.k3s.kubernetes_ready]
+
   metadata {
-    name      = kubernetes_service_account.bootstrap.default_secret_name
+    name      = kubernetes_service_account.bootstrap.metadata[0].name
     namespace = "default"
   }
 }

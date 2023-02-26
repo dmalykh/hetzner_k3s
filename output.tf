@@ -8,3 +8,8 @@ output "bootstrap_sa" {
   value       = data.kubernetes_secret.sa_credentials.data
   sensitive   = true
 }
+
+output "kube_config" {
+  value = module.k3s.kube_config
+  sensitive   = true
+}
