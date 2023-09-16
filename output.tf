@@ -13,3 +13,11 @@ output "kube_config" {
   value = module.k3s.kube_config
   sensitive   = true
 }
+
+output "masters" {
+  value = hcloud_server.master
+}
+
+output "agents" {
+  value = hcloud_server.agent
+}

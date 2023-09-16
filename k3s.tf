@@ -1,6 +1,6 @@
 # K3s 
 module "k3s" {
-  source = "git@github.com:dmalykh/terraform-module-k3s.git"
+  source = "github.com/dmalykh/terraform-module-k3s"
 
   depends_on_    = hcloud_server_network.agent
   k3s_version    = "latest"

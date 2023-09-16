@@ -2,7 +2,7 @@ Terraform module for creating K3S cluster using Hetzner cloud services.
 
 ```
 module "infrastructure" {
- source  = "git@github.com:dmalykh/hetzner_k3s.git"
+ source  = "github.com/dmalykh/hetzner_k3s"
  
  hcloud_token = "${var.hcloud_token}"
  os = "ubuntu-22.04"
